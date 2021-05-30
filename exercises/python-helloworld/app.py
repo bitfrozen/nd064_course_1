@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 from model import db
 app = Flask(__name__)
 
@@ -6,13 +6,19 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     return render_template("welcome.html",
-                           message="Message from variable")
+                           records=db)
 
 
-@app.route("/records")
-def record_view():
-    record = db[0]
-    return render_template("record.html", record=record)
+@app.route("/record/<int:index>")
+def record_view(index):
+    try:
+        record = db[index]
+        return render_template("record.html",
+                               record=record,
+                               index=index,
+                               max_index=len(db) - 1)
+    except IndexError:
+        abort(404)
 
 
 if __name__ == "__main__":

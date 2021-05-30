@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome!</title>
+  <meta charset="UTF-8">
+  <title>Welcome!</title>
 </head>
 <body>
-    <h1>Welcome to my page!</h1>
-    <p>
-        This is the demo application for the course
-        <em>Getting Started with Flask</em>
-        on <a href="https://www.pluralsight.com">Pluralsight</a>
-    </p>
-    <img src="/static/container.jpg" alt="containers">
-    <p>
-        {{ message }}
-    </p>
+  <h1>Welcome to my page!</h1>
+  <p>
+    This is the demo application for the course
+    <em>Getting Started with Flask</em>
+    on <a href="https://www.pluralsight.com">Pluralsight</a>
+  </p>
+  <img src="/static/container.jpg" alt="containers">
+  <h2>Records</h2>
+  <ul>
+    {% for record in records %}
+      <li>
+        <a href="{{ url_for('record_view', index=loop.index0) }}">
+          {{ record.name }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
 </body>
 </html>
