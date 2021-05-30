@@ -33,6 +33,19 @@ def add_record():
         return render_template("add_record.html")
 
 
+@app.route("/delete_record/<int:index>", methods=["GET", "POST"])
+def delete_record(index):
+    try:
+        if request.method == "POST":
+            del db[index]
+            save_db()
+            return redirect(url_for('hello'))
+        else:
+            return render_template('delete_record.html', record=db[index])
+    except IndexError:
+        abort(404)
+
+
 @app.route("/api/record/")
 def api_record_list():
     return jsonify(db)

@@ -1,18 +1,1 @@
-[
-  {
-    "name": "Jon",
-    "surname": "Smith"
-  },
-  {
-    "name": "Tom",
-    "surname": "Apple"
-  },
-  {
-    "name": "Lena",
-    "surname": "Troy"
-  },
-  {
-    "name": "Tara",
-    "surname": "Reid"
-  }
-]
+[{"name": "Jon", "surname": "Smith"}, {"name": "Tom", "surname": "Apple"}, {"name": "Lena", "surname": "Troy"}]
