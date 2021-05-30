@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Record</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Record{% endblock %}
+
+{% block content %}
   <h1>Record</h1>
   First name: {{ record.name }} <br>
   Surname: {{ record.surname }}
@@ -23,5 +21,4 @@
     </button>
   </p>
   <a href="{{ url_for('delete_record', index=index) }}">Delete record</a>
-</body>
-</html>
+{% endblock %}
