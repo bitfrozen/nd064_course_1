@@ -1,5 +1,5 @@
-from flask import Flask, render_template, abort, jsonify
-from model import db
+from flask import Flask, render_template, abort, jsonify, request, redirect, url_for
+from model import db, save_db
 app = Flask(__name__)
 
 
@@ -21,6 +21,18 @@ def record_view(index):
         abort(404)
 
 
+@app.route("/add_record", methods=["GET", "POST"])
+def add_record():
+    if request.method == "POST":
+        card = {"name": request.form['name'],
+                "surname": request.form['surname']}
+        db.append(card)
+        save_db()
+        return redirect(url_for('record_view', index=len(db) - 1))
+    else:
+        return render_template("add_record.html")
+
+
 @app.route("/api/record/")
 def api_record_list():
     return jsonify(db)
@@ -33,6 +45,6 @@ def api_record_detail(index):
     except IndexError:
         abort(404)
 
-        
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
