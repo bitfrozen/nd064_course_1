@@ -1,0 +1,21 @@
+namespace:
+  name: staging
+
+spec:
+  replicas: 1
+
+container:
+  image:
+    repository: nginx
+    tag: 1.18.0
+    pullPolicy: IfNotPresent
+  resources:
+    cpuLimit: "50m"
+    memoryLimit: "128Mi"
+
+service:
+  type: ClusterIP
+  port: 8111
+
+configmap:
+  data: "version: 1.18.0"

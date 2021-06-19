@@ -1,0 +1,9 @@
+apiVersion: v1
+name: nginx-deployment
+description: Install an nginx alpine deployment with supporting features
+keywords:
+  - nginx
+version: 1.0.0
+maintainers:
+  - name: bitfrozen
+    email: bitfrozen@example.com
