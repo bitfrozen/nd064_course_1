@@ -13,6 +13,7 @@ def get_db_connection():
     connection = sqlite3.connect('database.db')
     db_connection_counter += 1
     connection.row_factory = sqlite3.Row
+
     return connection
 
 
@@ -22,15 +23,20 @@ def get_post(post_id):
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                               (post_id,)).fetchone()
     connection.close()
+
     return post
 
 
 # Function to get total count of posts
 def get_post_count():
     connection = get_db_connection()
-    post_count = connection.execute('SELECT COUNT(*) FROM posts')
+    post_count_row = connection.execute('SELECT COUNT(*) FROM posts').fetchone()
     connection.close()
-    return post_count
+
+    if post_count_row is not None:
+        return post_count_row[0]
+
+    return 0
 
 
 # Define the Flask application
@@ -99,10 +105,11 @@ def healthcheck():
 # Define metrics endpoint
 @app.route('/metrics')
 def metrics():
+    post_count = get_post_count()
     response = app.response_class(
         response=json.dumps({
             "db_connection_count": db_connection_counter,
-            "post_count": get_post_count(),
+            "post_count": post_count,
         }),
         status=200,
         mimetype='application/json'
