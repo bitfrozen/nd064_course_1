@@ -1,7 +1,41 @@
+import logging
 import sqlite3
+import time
+from logging.config import dictConfig
 
-from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
-from werkzeug.exceptions import abort
+from flask import Flask, json, render_template, request, url_for, redirect, flash
+
+
+class UTCFormatter(logging.Formatter):
+    converter = time.gmtime
+
+
+dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            '()': UTCFormatter,
+            'format': '%(asctime)s [%(levelname)s]:%(name)s:%(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%SZ'
+        }
+    },
+    'handlers': {
+        'console_out': {
+            'formatter': 'default',
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://sys.stdout'
+        },
+        'console_err': {
+            'formatter': 'default',
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://sys.stderr'
+        }
+    },
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['console_out', 'console_err']
+    },
+})
 
 db_connection_counter = 0
 
@@ -59,14 +93,17 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+        app.logger.info(f'Non-existing article accessed with id {post_id}. "404" page returned')
         return render_template('404.html'), 404
     else:
+        app.logger.info(f'Article {post["title"]} retrieved')
         return render_template('post.html', post=post)
 
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    app.logger.info(f'"About Us" page retrieved')
     return render_template('about.html')
 
 
@@ -83,8 +120,8 @@ def create():
             connection = get_db_connection()
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)', (title, content))
             connection.commit()
+            app.logger.info(f'New article {title} created')
             connection.close()
-
             return redirect(url_for('index'))
 
     return render_template('create.html')
