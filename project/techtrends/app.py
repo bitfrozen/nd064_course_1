@@ -93,17 +93,17 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-        app.logger.info(f'Non-existing article accessed with id {post_id}. "404" page returned')
+        app.logger.info('Non-existing article accessed with id {0}. "404" page returned'.format(post_id))
         return render_template('404.html'), 404
     else:
-        app.logger.info(f'Article {post["title"]} retrieved')
+        app.logger.info('Article {0} retrieved'.format(post["title"]))
         return render_template('post.html', post=post)
 
 
 # Define the About Us page
 @app.route('/about')
 def about():
-    app.logger.info(f'"About Us" page retrieved')
+    app.logger.info('"About Us" page retrieved')
     return render_template('about.html')
 
 
@@ -120,7 +120,7 @@ def create():
             connection = get_db_connection()
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)', (title, content))
             connection.commit()
-            app.logger.info(f'New article {title} created')
+            app.logger.info('New article {0} created'.format(title))
             connection.close()
             return redirect(url_for('index'))
 
