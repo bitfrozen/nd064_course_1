@@ -254,6 +254,6 @@ Thumbs.db
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm+all,python,visualstudiocode
-**\.vagrant
-exercises/kubectl.exe
-exercises/kubectl.cmd
+**/.vagrant
+**/kubectl.exe
+**/kubectl.cmd
