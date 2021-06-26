@@ -73,6 +73,18 @@ def get_post_count():
     return 0
 
 
+def check_health():
+    try:
+        connection = get_db_connection()
+        connection.execute('SELECT 1 FROM posts').fetchone()
+    except Exception as e:
+        print('Exception: {0}'.format(e))
+
+        return False
+
+    return True
+
+
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -130,11 +142,18 @@ def create():
 # Define healthcheck endpoint
 @app.route('/healthz')
 def healthcheck():
-    response = app.response_class(
-        response=json.dumps({"result": "OK - healthy"}),
-        status=200,
-        mimetype='application/json'
-    )
+    if check_health():
+        response = app.response_class(
+            response=json.dumps({"result": "OK - healthy"}),
+            status=200,
+            mimetype='application/json'
+        )
+    else:
+        response = app.response_class(
+            response=json.dumps({"result": "ERROR - unhealthy"}),
+            status=500,
+            mimetype='application/json'
+        )
 
     return response
 
