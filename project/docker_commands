@@ -1,5 +1,5 @@
 ## Docker commands used to build the application
-docker build -f Dockerfile -t techtrends:latest ./techtrends/
+docker build -f Dockerfile -t techtrends:latest .
 
 ## Docker commands used to run the application
 docker run -d --rm --name techtrends-app -p 7111:3111 techtrends:latest
@@ -8,40 +8,33 @@ docker run -d --rm --name techtrends-app -p 7111:3111 techtrends:latest
 docker logs -f techtrends-app
 
 ## Logs from the container running the TechTrends application
+2021-06-27 16:12:02Z [DEBUG]:app: Demonstrating app debug level log
+2021-06-27 16:12:02Z [INFO]:app: Demonstrating app info level log
+2021-06-27 16:12:02Z [WARNING]:app: Demonstrating app warning level log
+2021-06-27 16:12:02Z [ERROR]:app: Demonstrating app error level log
+2021-06-27 16:12:02Z [CRITICAL]:app: Demonstrating app critical level log
  * Serving Flask app "app" (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
  * Debug mode: off
-2021-06-24 18:13:39Z [INFO]:werkzeug: * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
-2021-06-24 18:13:39Z [INFO]:werkzeug: * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
-2021-06-24 18:13:42Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:13:42] "GET / HTTP/1.1" 200 -
-2021-06-24 18:13:42Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:13:42] "GET / HTTP/1.1" 200 -
-2021-06-24 18:14:03Z [INFO]:app:Article CNCF Cloud Native Interactive Landscape retrieved
-2021-06-24 18:14:03Z [INFO]:app:Article CNCF Cloud Native Interactive Landscape retrieved
-2021-06-24 18:14:03Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:03] "GET /4 HTTP/1.1" 200 -
-2021-06-24 18:14:03Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:03] "GET /4 HTTP/1.1" 200 -
-2021-06-24 18:14:10Z [INFO]:app:"About Us" page retrieved
-2021-06-24 18:14:10Z [INFO]:app:"About Us" page retrieved
-2021-06-24 18:14:10Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:10] "GET /about HTTP/1.1" 200 -
-2021-06-24 18:14:10Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:10] "GET /about HTTP/1.1" 200 -
-2021-06-24 18:14:12Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:12] "GET / HTTP/1.1" 200 -
-2021-06-24 18:14:12Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:12] "GET / HTTP/1.1" 200 -
-2021-06-24 18:14:14Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:14] "GET /create HTTP/1.1" 200 -
-2021-06-24 18:14:14Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:14:14] "GET /create HTTP/1.1" 200 -
-2021-06-24 18:16:08Z [INFO]:app:New article CNCF news aggregator website launched created
-2021-06-24 18:16:08Z [INFO]:app:New article CNCF news aggregator website launched created
-2021-06-24 18:16:08Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:08] "POST /create HTTP/1.1" 302 -
-2021-06-24 18:16:08Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:08] "POST /create HTTP/1.1" 302 -
-2021-06-24 18:16:08Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:08] "GET / HTTP/1.1" 200 -
-2021-06-24 18:16:08Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:08] "GET / HTTP/1.1" 200 -
-2021-06-24 18:16:27Z [INFO]:app:Article CNCF news aggregator website launched retrieved
-2021-06-24 18:16:27Z [INFO]:app:Article CNCF news aggregator website launched retrieved
-2021-06-24 18:16:27Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:27] "GET /7 HTTP/1.1" 200 -
-2021-06-24 18:16:27Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:27] "GET /7 HTTP/1.1" 200 -
-2021-06-24 18:16:49Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:49] "GET /metrics HTTP/1.1" 200 -
-2021-06-24 18:16:49Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:16:49] "GET /metrics HTTP/1.1" 200 -
-2021-06-24 18:17:30Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:17:30] "GET /vapor HTTP/1.1" 404 -
-2021-06-24 18:17:30Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:17:30] "GET /vapor HTTP/1.1" 404 -
-2021-06-24 18:17:38Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:17:38] "GET / HTTP/1.1" 200 -
-2021-06-24 18:17:38Z [INFO]:werkzeug:172.17.0.1 - - [24/Jun/2021 18:17:38] "GET / HTTP/1.1" 200 -
+2021-06-27 16:12:02Z [INFO]:werkzeug:  * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
+2021-06-27 16:19:57Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:19:57] "GET / HTTP/1.1" 200 -
+2021-06-27 16:19:57Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:19:57] "GET /static/css/main.css HTTP/1.1" 200 -
+2021-06-27 16:19:57Z [ERROR]:app: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2021-06-27 16:19:57Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:19:57] "GET /favicon.ico HTTP/1.1" 404 -
+2021-06-27 16:23:41Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:23:41] "GET / HTTP/1.1" 200 -
+2021-06-27 16:26:13Z [INFO]:app: Article 2020 CNCF Annual Report retrieved
+2021-06-27 16:26:13Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:26:13] "GET /1 HTTP/1.1" 200 -
+2021-06-27 16:26:19Z [ERROR]:app: Non-existing article accessed with id 12. "404" page returned
+2021-06-27 16:26:19Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:26:19] "GET /12 HTTP/1.1" 404 -
+2021-06-27 16:26:40Z [ERROR]:app: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2021-06-27 16:26:40Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:26:40] "GET /dskjdksj HTTP/1.1" 404 -
+2021-06-27 16:26:51Z [INFO]:app: "About Us" page retrieved
+2021-06-27 16:26:51Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:26:51] "GET /about HTTP/1.1" 200 -
+2021-06-27 16:27:01Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:27:01] "GET /create HTTP/1.1" 200 -
+2021-06-27 16:27:29Z [INFO]:app: New article CNCF news aggregator website launched created
+2021-06-27 16:27:29Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:27:29] "POST /create HTTP/1.1" 302 -
+2021-06-27 16:27:29Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:27:29] "GET / HTTP/1.1" 200 -
+2021-06-27 16:27:32Z [INFO]:app: Article CNCF news aggregator website launched retrieved
+2021-06-27 16:27:32Z [INFO]:werkzeug: 172.17.0.1 - - [27/Jun/2021 16:27:32] "GET /7 HTTP/1.1" 200 -
