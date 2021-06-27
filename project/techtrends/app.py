@@ -1,43 +1,67 @@
 import logging
 import sqlite3
 import time
+import sys
 from logging.config import dictConfig
 
-from flask import Flask, json, render_template, request, url_for, redirect, flash
+from flask import Flask, json, render_template, request, url_for, redirect, flash, abort
 
 
 class UTCFormatter(logging.Formatter):
     converter = time.gmtime
 
 
+class ErrorFilter(logging.Filter):
+    def filter(self, record):
+        allow = record.levelno < logging.ERROR
+
+        return allow
+
+
+db_connection_counter = 0
+
+
 dictConfig({
     'version': 1,
+    'disable_existing_loggers': True,
     'formatters': {
         'default': {
             '()': UTCFormatter,
-            'format': '%(asctime)s [%(levelname)s]:%(name)s:%(message)s',
+            'format': '%(asctime)s [%(levelname)s]:%(name)s: %(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%SZ'
+        }
+    },
+    'filters': {
+        'error_filter': {
+            '()': ErrorFilter,
         }
     },
     'handlers': {
         'console_out': {
             'formatter': 'default',
             'class': 'logging.StreamHandler',
-            'stream': 'ext://sys.stdout'
+            'stream': 'ext://sys.stdout',
+            'filters': ['error_filter']
+            # 'level': 'DEBUG',
         },
         'console_err': {
             'formatter': 'default',
             'class': 'logging.StreamHandler',
-            'stream': 'ext://sys.stderr'
-        }
+            'stream': 'ext://sys.stderr',
+            'level': 'ERROR',
+        },
+        'wsgi': {
+            'formatter': 'default',
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+        },
     },
-    'root': {
+    'root': {  # root logger
+        'handlers': ['console_out', 'console_err'],
         'level': 'DEBUG',
-        'handlers': ['console_out', 'console_err']
+        'propagate': False
     },
 })
-
-db_connection_counter = 0
 
 
 # Function to get a database connection.
@@ -85,9 +109,24 @@ def check_health():
     return True
 
 
+def handle_flask_error(e):
+    app_logger = logging.getLogger('app')
+    app_logger.error('{0}'.format(e))
+
+    return render_template('error.html'), e.code
+
+
+
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+app.register_error_handler(Exception, handle_flask_error)
+
+app.logger.debug('Demonstrating app debug level log')
+app.logger.info('Demonstrating app info level log')
+app.logger.warning('Demonstrating app warning level log')
+app.logger.error('Demonstrating app error level log')
+app.logger.critical('Demonstrating app critical level log')
 
 
 # Define the main route of the web application 
@@ -105,7 +144,7 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-        app.logger.info('Non-existing article accessed with id {0}. "404" page returned'.format(post_id))
+        app.logger.error('Non-existing article accessed with id {0}. "404" page returned'.format(post_id))
         return render_template('404.html'), 404
     else:
         app.logger.info('Article {0} retrieved'.format(post["title"]))
@@ -128,6 +167,7 @@ def create():
 
         if not title:
             flash('Title is required!')
+            app.logger.error('Submitting article without title')
         else:
             connection = get_db_connection()
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)', (title, content))

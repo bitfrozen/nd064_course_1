@@ -2,7 +2,9 @@
 
 {% block content %}
 <h2>{% block title %} Create a New Post {% endblock %}</h2>
-
+{% for message in get_flashed_messages() %}
+  <div class="alert-error">Error: {{ message }}</div>
+{% endfor %}
 <form method="post">
     <div class="form">
         <label class="label" for="title">Title *</label>

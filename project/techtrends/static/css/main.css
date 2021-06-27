@@ -99,3 +99,13 @@ h2 {
   color: #444;
   text-decoration: none;
 }
+
+.alert-error {
+  padding: 10px;
+  border-radius: 3px;
+  margin: auto;
+  width: fit-content;
+  border: 2px solid darkred;
+  background-color: red;
+  color: white;
+}
